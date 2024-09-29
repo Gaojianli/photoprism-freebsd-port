@@ -26,7 +26,7 @@ jobs:
           usesh: true
           prepare: |
             pkg install -y gmake npm wget pkgconf git go122
-            portsnap fetch extract
+            /usr/sbin/portsnap fetch extract
           run: |
             make makesum
             make -j $(nproc)
