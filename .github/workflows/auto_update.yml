@@ -26,7 +26,7 @@ jobs:
         with:
           usesh: true
           prepare: |
-            pkg install -y gmake npm wget pkgconf git go122 portsnap
+            pkg install -y gmake npm wget pkgconf git go122 portsnap ffmpeg p5-Image-ExifTool libheif vips
             mkdir -p /var/db/portsnap && portsnap --interactive auto
           run: |
             make makesum
