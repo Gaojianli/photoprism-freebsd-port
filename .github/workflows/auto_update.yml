@@ -26,8 +26,8 @@ jobs:
         with:
           usesh: true
           prepare: |
-            pkg install -y gmake npm wget pkgconf git go122
-            git clone https://git.freebsd.org/ports.git /usr/ports
+            pkg install -y gmake npm wget pkgconf git go122 portsnap
+            portsnap fetch extract
           run: |
             make makesum
             make -j $(nproc)
