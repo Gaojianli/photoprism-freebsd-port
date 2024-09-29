@@ -27,7 +27,7 @@ jobs:
           usesh: true
           prepare: |
             pkg install -y gmake npm wget pkgconf git go121 portsnap ffmpeg p5-Image-ExifTool libheif vips bsddialog portconfig
-            mkdir -p /var/db/portsnap && portsnap --interactive auto > dev/null
+            mkdir -p /var/db/portsnap && portsnap --interactive auto > /dev/null
             fetch https://github.com/psa/libtensorflow1-freebsd-port/releases/download/1.15.5-pre-release-0/libtensorflow1-1.15.5-FreeBSD-13.0-AVX.pkg -o /tmp/libtf.pkg
             pkg add /tmp/libtf.pkg
           run: |
