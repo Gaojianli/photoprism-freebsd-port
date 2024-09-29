@@ -9,6 +9,8 @@ jobs:
   UpdateToLatest:
     name: Update to Latest
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - id: getRelease
@@ -37,4 +39,9 @@ jobs:
             make makeplist >pkg-plist
             tail -n +2 pkg-plist >pkg-plist.tmp
             mv pkg-plist.tmp pkg-plist
-            git status
+      - name: Show diff
+        run: git diff
+      - name: Commit and push
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "[Auto update] Update to ${{ steps.getRelease.outputs.release }}"
