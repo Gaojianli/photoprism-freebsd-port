@@ -27,7 +27,7 @@ jobs:
           usesh: true
           prepare: |
             pkg install -y gmake npm wget pkgconf git go122 portsnap
-            portsnap --interactive auto
+            mkdir -p /var/db/portsnap && portsnap --interactive auto
           run: |
             make makesum
             make -j $(nproc)
