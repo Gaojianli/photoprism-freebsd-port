@@ -25,7 +25,7 @@ jobs:
         with:
           usesh: true
           prepare: |
-            pkg install -y gmake npm wget pkg-config git
+            pkg install -y gmake npm wget pkgconf git
           run: |
             make makesum
             make -j $(nproc)
