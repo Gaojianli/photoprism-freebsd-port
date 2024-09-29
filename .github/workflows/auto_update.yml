@@ -7,6 +7,7 @@ on:
 
 jobs:
   UpdateToLatest:
+    name: Update to Latest
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -26,7 +27,7 @@ jobs:
           usesh: true
           prepare: |
             pkg install -y gmake npm wget pkgconf git go122
-            /usr/sbin/portsnap fetch extract
+            git clone https://git.freebsd.org/ports.git /usr/ports
           run: |
             make makesum
             make -j $(nproc)
