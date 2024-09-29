@@ -11,11 +11,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: getRelease
+        name: Fetch latest release
         uses: pozetroninc/github-action-get-latest-release@master
         with:
           repository: photoprism/photoprism
-      - run: |
+      - name: Update Makefile
+        run: |
           export VERSION=`echo "${{ steps.getRelease.outputs.release }}"|cut -d "-" -f 1`
-          sed -i "s/DISTVERSION=.*/DISTVERSION=g${VERSION}/g" Makefile
-          sed -i "s/GH_TAGNAME=.*/GH_TAGNAME=${{ steps.getRelease.outputs.release }}/g" Makefile
-          cat Makefile
+          sed -i "s/DISTVERSION=.*/DISTVERSION=	g${VERSION}/g" Makefile
+          sed -i "s/GH_TAGNAME=.*/GH_TAGNAME=	${{ steps.getRelease.outputs.release }}/g" Makefile
+      - name: Build The Latest
+        uses: vmactions/freebsd-vm@v1
+        with:
+          usesh: true
+          prepare: |
+            pkg install -y gmake npm wget pkg-config git
+          run: |
+            make makesum
+            make -j $(nproc)
+            make makeplist >pkg-plist
+            tail -n +2 pkg-plist >pkg-plist.tmp
+            mv pkg-plist.tmp pkg-plist
+            git status
